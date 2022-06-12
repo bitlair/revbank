@@ -1,0 +1,19 @@
+#!perl
+
+use Cwd ();
+use Net::MQTT::Simple;
+
+my $mqtt = Net::MQTT::Simple->new("mqtt.bitlair.nl");
+
+sub command { NEXT }
+
+sub hook_checkout {
+    my ($class, $cart, $user, $transaction_id) = @_;
+
+    my @entries = $cart->entries('product_id') or return;
+
+    for my $entry (@entries) {
+        $mqtt->publish("bitlair/pos/product" => $entry->{description})
+            for 1..$entry->quantity;
+    }
+}
