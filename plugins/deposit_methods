@@ -5,10 +5,11 @@ sub hook_deposit_methods($class, $message, $hash, @) {
 
 Please type one of the following:
 
-'iban':      IBAN transfer (NL 69 ABNA 0431 1582 07)
+'iban':      IBAN transfer (Min 10 EUR / NL89 RABO 0111 7413 86)
 'cash':      Cash in the cash box
 'reimburse': Reimbursement of expenses agreed upon in advance
-             Note: we require an invoice or receipt with this exact amount!
+             Note #1: we require an invoice or receipt with this exact amount!
+             Note #2: please do not use this plugin for amounts >20 EUR
 'other':     Provide a manual description
 END
 

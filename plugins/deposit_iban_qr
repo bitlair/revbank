@@ -20,8 +20,8 @@
 use IPC::Open2 qw(open2);
 use List::Util qw(sum);
 
-my $iban = "NL99ABCD1234567890";
-my $beneficiary = "Account Name";
+my $iban = "NL89RABO0111741386";
+my $beneficiary = "Stichting Bitlair";
 
 sub hook_checkout($class, $cart, $user, $transaction_id, @) {
     my @entries = $cart->entries("is_deposit");
@@ -41,7 +41,7 @@ sub hook_checkout($class, $cart, $user, $transaction_id, @) {
             "EUR" . $amount,      # Amount
             "",
             "",
-            "rb $user",
+            "Deposit $user (RB QR)",
             "",
         );
         close $in;
@@ -57,6 +57,8 @@ sub hook_checkout($class, $cart, $user, $transaction_id, @) {
         $lines[3] =~ s/$/ EPC QR codes. N26 also works./;
         $lines[5] =~ s/$/ For manual transfers, use this/;
         $lines[6] =~ s/$/ IBAN: $iban/;
+        $lines[7] =~ s/$/ Benificiary: $beneficiary/;
+        $lines[8] =~ s/$/ Description: Deposit $user/;
 
         print @lines;
     }
