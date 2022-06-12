@@ -17,7 +17,7 @@ sub hook_checkout_done($class, $cart, $user, $transaction_id, @) {
     my $balance = RevBank::Users::balance($user) or return;
     my $since   = RevBank::Users::since($user);
 
-    if ($balance < -22.00) {
+    if ($balance < -13.37) {
         _box(
             "Hoi $user,",
             "",

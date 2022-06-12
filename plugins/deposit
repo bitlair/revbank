@@ -46,6 +46,10 @@ sub how :Tab(&how_tab) ($self, $cart, $input, @) {
         return shift @{ $how->{prompts} }, \&how_prompt;
     }
 
+    if ( ($input eq "iban") && ($self->{amount} < 10 || $self->{amount} == 25) ) {
+        return REJECT, "\n\e[31;1mPlease transfer at least 10 EUR and not 25 or 32 EUR when using iban\e[0m\n\n";
+    }
+
     my $contra = 
           $how->{_key} eq 'cash'      ? '-cash'
         : $how->{_key} eq 'reimburse' ? '-expenses/reimbursed'

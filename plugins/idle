@@ -1,6 +1,6 @@
 #!perl
 
-my $timeout = 10;
+my $timeout = 20;
 
 sub hook_prompt_idle($class, $cart, $plugin, $seconds, $readline, @) {
     return unless $seconds >= $timeout and $cart->size and not $plugin;
