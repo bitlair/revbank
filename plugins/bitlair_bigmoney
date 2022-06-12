@@ -1,0 +1,17 @@
+#!perl
+
+sub command :Tab(bigmoney) {
+    my ($self, $cart, $command) = @_;
+
+    return NEXT if $command ne "bigmoney";
+
+    my @list = sort {
+        (split " ", $b)[1] <=> (split " ", $a)[1]
+    } grep {
+        not RevBank::Users::is_hidden($_)
+    } slurp("revbank.accounts");
+
+    print join "", @list[0..9];
+
+    return ACCEPT;
+}

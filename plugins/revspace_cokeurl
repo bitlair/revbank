@@ -1,0 +1,8 @@
+# Accept the odd QR-codes on Coke (and Fanta, etc.) cans, as they also contain the EAN.
+
+# For this plugin to be useful, it needs to be BEFORE "users" in "revbank.plugins".
+
+sub command {
+    $_[2] =~ s@^https?://(coke|fanta)url.com/q/srn@@gi;  # input is actually a mutable string
+    return NEXT;
+}

@@ -1,0 +1,26 @@
+#!perl
+
+HELP "3dprint <gram>" => "3D-print filament afrekenen";
+
+use Scalar::Util qw(looks_like_number);
+
+sub command :Tab(3dprint) ($self, $cart, $command, @) {
+    return NEXT if $command ne '3dprint';
+
+    return "Gewicht in gram, inclusief supports en purges", \&gram;
+}
+
+sub gram($self, $cart, $input, @) {
+    looks_like_number($input) and $input == int($input) or return REJECT, "Invalid number!";
+    my $gram = int($input);
+    return REJECT, "$input: Invalid amount." if $gram <= 0;
+
+    my $beneficiary = "3dprinter";
+    my $amount = 0.10 + $gram * 0.03;
+
+    $cart
+        ->add(-$amount, "Given to $beneficiary ($gram g)")
+        ->add_contra($beneficiary, +$amount, "Received from \$you (${gram} g)");
+
+    return ACCEPT;
+}
