@@ -1,0 +1,19 @@
+#!perl
+
+use Cwd ();
+
+sub command { NEXT }
+
+sub hook_checkout_done {
+    my ($class, $cart, $username, $transaction_id) = @_;
+
+    my @cart_printed = map { "\n-> $_" } map { $_->as_printable } $cart->entries;
+
+    my $fn = "/tmp/revbank$$.commit";
+    open my $fh, ">", $fn or warn $!;
+    print $fh "$username ($transaction_id)\n@cart_printed";
+    close $fh or warn $!;
+
+    my $output = `(cp revbank.accounts revbank.market revbank.products ~/data.git/ && cd ~/data.git/ && git commit -a -F $fn) 2>&1`;
+    warn "Meh, gitfaal: $output" if $?;
+}

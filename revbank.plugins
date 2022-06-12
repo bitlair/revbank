@@ -9,16 +9,17 @@ beep_terminal
 #cash_drawer
 idle
 #json
-nomoney
+#nomoney
 repeat
 deduplicate  # wants to be after 'repeat'
 restart
 sighup
 sigint
-#stock
+stock
 #vat         # configure before using
 #warnings
 window_title
+bitlair_git
 
 # Then, specific commands:
 
@@ -26,8 +27,8 @@ adduser_note
 adduser
 #cash             # cash tracking also requires deposit_methods to make sense
 deposit
-#deposit_methods  # Extra options for 'deposit'. Edit/configure first!
-#deposit_iban_qr  # QR code display, edit/configure first! (needs qrencode(1))
+deposit_methods  # Extra options for 'deposit'. Edit/configure first!
+deposit_iban_qr  # QR code display, edit/configure first! (needs qrencode(1))
 dinnerbonus
 edit
 give
@@ -44,6 +45,7 @@ withdraw
 
 # Then, plugins that apply heuristics
 
+revspace_cokeurl
 #statiegeld         # wants to be before 'products'; matches product IDs
 #statiegeld_tokens
 products           # matches product IDs (barcodes)
@@ -53,3 +55,9 @@ users              # matches usernames
 regex_gtin         # matches GTINs in URLs and element strings
 url                # matches other URLs
 #deprecated_raw     # matches amounts
+
+bitlair_bigmoney
+bitlair_mqtt
+bitlair_nomunnie
+revspace_saldo
+3dprint

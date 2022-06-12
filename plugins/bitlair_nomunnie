@@ -1,0 +1,15 @@
+#!perl
+
+use IO::Socket::IP;
+use Net::MQTT::Simple "mqtt.bitlair.nl";
+
+sub command { NEXT }
+
+sub hook_user_balance {
+    my ($class, $user, $old, $delta, $new, $transaction_id) = @_;
+
+    return if $new >= -13.37;
+    return if RevBank::Users::is_hidden($user);
+
+    publish "bitlair/bank/shame" => "NO MUNNIE?";
+}
